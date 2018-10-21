@@ -16,8 +16,6 @@ import java.util.Properties;
 import co.ppk.domain.Customer;
 import co.ppk.dto.CustomerDto;
 import co.ppk.service.BusinessManager;
-import co.ppk.utilities.CustomerRepository;
-import co.ppk.utilities.DataSourceSingleton;
 import co.ppk.validators.CustomerValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
