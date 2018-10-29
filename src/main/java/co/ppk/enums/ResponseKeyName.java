@@ -11,5 +11,7 @@ public enum ResponseKeyName {
 	/** The matter. */
 	message,
 	customer,
-	customerId
+	customerId,
+	faceplate,
+	faceplateId
 }

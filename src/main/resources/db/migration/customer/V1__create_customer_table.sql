@@ -13,3 +13,13 @@ CREATE TABLE customers (
 );
 
 CREATE INDEX customers_identification ON customers (identification);
+
+
+CREATE TABLE faceplates (
+  id varchar(36) PRIMARY KEY,
+  faceplate varchar(10) NOT NULL,
+  customerid varchar(36) NOT NULL,
+  create_date TIMESTAMP DEFAULT NOW(),
+   update_date TIMESTAMP DEFAULT NOW()
+  );
+CREATE INDEX faceplates_faceplate ON faceplates (faceplate);
