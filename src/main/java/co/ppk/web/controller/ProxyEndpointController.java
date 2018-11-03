@@ -15,6 +15,7 @@ import java.util.Properties;
 
 import co.ppk.domain.Customer;
 import co.ppk.dto.CustomerDto;
+import co.ppk.dto.FaceplateDto;
 import co.ppk.service.BusinessManager;
 import co.ppk.validators.CustomerValidator;
 import org.apache.logging.log4j.LogManager;
@@ -29,6 +30,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import co.ppk.enums.ResponseKeyName;
+import org.springframework.web.client.HttpClientErrorException;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Only service exposition point of services to FE layer
@@ -77,10 +81,9 @@ public class ProxyEndpointController extends BaseRestController {
     }
 
     @RequestMapping(value = "/customer", method = RequestMethod.POST)
-    public ResponseEntity<Object> createCustomer(@Validated @RequestBody CustomerDto customer,
+    public ResponseEntity<Object> createCustomer(@RequestBody CustomerDto customer,
                                                  BindingResult result) {
-        customerValidator.validate(customer, result);
-        ResponseEntity<Object> responseEntity = apiValidator(result);
+         ResponseEntity<Object> responseEntity = apiValidator(result);
         if (responseEntity != null) {
             return responseEntity;
         }
@@ -89,17 +92,31 @@ public class ProxyEndpointController extends BaseRestController {
         if(customerId.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
         }
-        return ResponseEntity.ok(createSuccessResponse(ResponseKeyName.customerId, customerId));
+        return ResponseEntity.ok( customerId);
     }
 
-	@RequestMapping(value = "/customer/{customer_id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Object> getCustomer(@PathVariable("customer_id") String customerId) {
-		Customer customer = businessManager.getCustomer(customerId);
+	@RequestMapping(value = "/customer/identification/{identification}", method = RequestMethod.GET)
+	public ResponseEntity<Object> getCustomerByIdentification(@PathVariable("identification") String identification,
+																	 HttpServletRequest request) {
+		ResponseEntity<Object> responseEntity;
+		CustomerDto customer = businessManager.getCustomerByIdentification(identification);
+			responseEntity = ResponseEntity.ok(customer);
+		return responseEntity;
+	}
 
-		if(Objects.isNull(customer)) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+
+	@RequestMapping(value = "/customer/faceplate", method = RequestMethod.POST)
+	public ResponseEntity<Object> registerFaceplate(@RequestBody FaceplateDto faceplate,
+												 BindingResult result) {
+		ResponseEntity<Object> responseEntity = apiValidator(result);
+		if (responseEntity != null) {
+			return responseEntity;
 		}
-		return ResponseEntity.ok(createSuccessResponse(ResponseKeyName.customer, customer));
 
+		String faceplateId = businessManager.registerFaceplate(faceplate);
+		if(faceplateId.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
+		}
+		return ResponseEntity.ok(faceplateId);
 	}
 }
