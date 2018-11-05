@@ -119,4 +119,16 @@ public class ProxyEndpointController extends BaseRestController {
 		}
 		return ResponseEntity.ok(faceplateId);
 	}
+
+
+	@RequestMapping(value = "/customer/faceplate/{faceplate}", method = RequestMethod.GET)
+	public ResponseEntity<Object> getFaceplateByFaceplate(@PathVariable("faceplate") String faceplate,
+															  HttpServletRequest request) {
+		ResponseEntity<Object> responseEntity;
+		FaceplateDto faceplateResponse = businessManager.getFaceplateByFaceplate(faceplate);
+		responseEntity = ResponseEntity.ok(faceplateResponse);
+		return responseEntity;
+	}
 }
+
+

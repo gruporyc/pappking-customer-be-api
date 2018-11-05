@@ -2,6 +2,7 @@ package co.ppk.service.impl;
 
 import co.ppk.data.FaceplateRepository;
 import co.ppk.domain.Customer;
+import co.ppk.domain.Faceplate;
 import co.ppk.dto.CustomerDto;
 import co.ppk.dto.FaceplateDto;
 import co.ppk.service.BusinessManager;
@@ -67,4 +68,20 @@ public class BussinessManagerImpl implements BusinessManager{
         }
         return faceplateRepository.registerFaceplate(faceplate);
     }
+
+
+    @Override
+    public FaceplateDto getFaceplateByFaceplate(String faceplate) {
+        Optional<Faceplate> faceplateResponse = faceplateRepository.getFaceplateByFaceplate(faceplate);
+        FaceplateDto response = new FaceplateDto();
+        if (!faceplateResponse.isPresent()) {
+            return response;
+        }
+        response.setId(faceplateResponse.get().getId());
+        response.setCustomerid(faceplateResponse.get().getCustomerid());
+        response.setFaceplate(faceplateResponse.get().getFaceplate());
+        return response;
+    }
+
+
 }
