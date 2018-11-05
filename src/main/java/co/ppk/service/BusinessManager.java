@@ -14,4 +14,6 @@ public interface BusinessManager {
     String createCustomer(CustomerDto customer);
 
     String registerFaceplate(FaceplateDto faceplate);
+
+    FaceplateDto getFaceplateByFaceplate (String faceplate);
 }

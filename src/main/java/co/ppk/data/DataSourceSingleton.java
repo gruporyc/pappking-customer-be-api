@@ -18,12 +18,15 @@ public class DataSourceSingleton {
     public static synchronized DataSource getInstance() {
         if (instance == null) {
             HikariConfig config = new HikariConfig();
+            config.setDriverClassName("com.mysql.cj.jdbc.Driver");
             config.setJdbcUrl(Optional.ofNullable(System.getenv("CUSTOMER_DB_URL"))
-                    .orElse("jdbc:mysql://localhost:3306/ppk_customers"));
+                    .orElse("jdbc:mysql://104.197.233.102:3306/ppk_customers"));
+                    //.orElse("jdbc:mysql://localhost:3306/ppk_customers"));
             config.setUsername(Optional.ofNullable(System.getenv("CUSTOMER_JDBC_USERNAME"))
                     .orElse("root"));
             config.setPassword(Optional.ofNullable(System.getenv("CUSTOMER_JDBC_PASSWORD"))
-                    .orElse(""));
+                    .orElse("pericos2"));
+                    //.orElse(""));
             config.addDataSourceProperty("cachePrepStmts", "true");
             config.addDataSourceProperty("prepStmtCacheSize", "250");
             config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
