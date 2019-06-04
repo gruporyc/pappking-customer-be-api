@@ -8,13 +8,14 @@
  * 
  ******************************************************************/
 
-package co.ppk.web.controller;
+package co.ppk.controller;
 import java.util.List;
 import java.util.Objects;
 import java.util.Properties;
 
 import co.ppk.domain.Customer;
 import co.ppk.dto.CustomerDto;
+import co.ppk.dto.SimpleResponseDto;
 import co.ppk.service.BusinessManager;
 import co.ppk.validators.CustomerValidator;
 import org.apache.logging.log4j.LogManager;
@@ -40,15 +41,6 @@ import co.ppk.enums.ResponseKeyName;
 @RestController
 @RequestMapping("/v1")
 public class ProxyEndpointController extends BaseRestController {
-
-	private static final Logger LOGGER = LogManager.getLogger(ProxyEndpointController.class);
-
-	private static final String CURRENT_USER_LOCALE = "language";
-
-	/** The error properties. */
-	@Autowired
-	@Qualifier("errorProperties")
-	private Properties errorProperties;
 
 	@Autowired
 	BusinessManager businessManager;
@@ -89,7 +81,10 @@ public class ProxyEndpointController extends BaseRestController {
         if(customerId.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
         }
-        return ResponseEntity.ok(createSuccessResponse(ResponseKeyName.customerId, customerId));
+        return ResponseEntity.ok(new SimpleResponseDto() {{
+        	setSuccess(true);
+        	setMessage(customerId);
+				}});
     }
 
 	@RequestMapping(value = "/customer/{customer_id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
