@@ -2,6 +2,7 @@ package co.ppk.data;
 
 import co.ppk.domain.Faceplate;
 import co.ppk.dto.FaceplateDto;
+import co.ppk.utilities.DataSourceSingleton;
 import org.apache.commons.dbutils.DbUtils;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.ScalarHandler;

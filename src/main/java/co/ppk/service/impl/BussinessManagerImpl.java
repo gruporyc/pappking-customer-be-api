@@ -45,6 +45,23 @@ public class BussinessManagerImpl implements BusinessManager{
         return response;
     }
 
+    public CustomerDto getCustomer(String customerId) {
+        Optional<Customer> customer = customerRepository.getCustomer(customerId);
+        CustomerDto response = new CustomerDto();
+        if (!customer.isPresent()) {
+            return response;
+        }
+        response.setId(customer.get().getId());
+        response.setIdentification(customer.get().getIdentification());
+        response.setName(customer.get().getName());
+        response.setLastName(customer.get().getLastName());
+        response.setEmail(customer.get().getEmail());
+        response.setAddress(customer.get().getAddress());
+        response.setPhone(customer.get().getPhone());
+        response.setStatus(customer.get().getStatus());
+        return response;
+    }
+
 
     @Override
     public List<Customer> getCustomers() {

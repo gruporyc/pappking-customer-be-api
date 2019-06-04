@@ -2,6 +2,7 @@ package co.ppk.data;
 
 import co.ppk.domain.Customer;
 import co.ppk.dto.CustomerDto;
+import co.ppk.utilities.DataSourceSingleton;
 import org.apache.commons.dbutils.DbUtils;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
@@ -29,31 +30,35 @@ public class CustomerRepository {
         QueryRunner run = new QueryRunner(ds);
         try {
             String query = "SELECT * FROM ppk_customers.customers WHERE id = '" + customerId + "';";
-            Optional<Customer> customer = run.query(query,
-                rs -> {
-                    if (!rs.next()) {
-                        Optional<Object> empty = Optional.empty();
-                        return Optional.empty();
-                    }
-                    rs.last();
-                    return Optional.ofNullable(new Customer.Builder()
-                            .setId(rs.getString(1))
-                            .setIdentification(rs.getString(2))
-                            .setName(rs.getString(3))
-                            .setLastName(rs.getString(4))
-                            .setEmail(rs.getString(5))
-                            .setAddress(rs.getString(6))
-                            .setPhone(rs.getString(7))
-                            .setType(rs.getString(8))
-                            .setStatus(rs.getString(9))
-                            .setCreateDate(rs.getString(10))
-                            .setUpdateDate(rs.getString(11))
-                            .build());
-                });
-            return customer;
+            return getSingleCustomer(run, query);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private Optional<Customer> getSingleCustomer(QueryRunner run, String query) throws SQLException {
+        Optional<Customer> customer = run.query(query,
+            rs -> {
+                if (!rs.next()) {
+                    Optional<Object> empty = Optional.empty();
+                    return Optional.empty();
+                }
+                rs.last();
+                return Optional.ofNullable(new Customer.Builder()
+                        .setId(rs.getString(1))
+                        .setIdentification(rs.getString(2))
+                        .setName(rs.getString(3))
+                        .setLastName(rs.getString(4))
+                        .setEmail(rs.getString(5))
+                        .setAddress(rs.getString(6))
+                        .setPhone(rs.getString(7))
+                        .setType(rs.getString(8))
+                        .setStatus(rs.getString(9))
+                        .setCreateDate(rs.getString(10))
+                        .setUpdateDate(rs.getString(11))
+                        .build());
+            });
+        return customer;
     }
 
     public List<Customer> getCustomers() {
@@ -140,28 +145,7 @@ public class CustomerRepository {
         QueryRunner run = new QueryRunner(ds);
         try {
             String query = "SELECT * FROM ppk_customers.customers WHERE identification = '" + identification + "';";
-            Optional<Customer> customer = run.query(query,
-                    rs -> {
-                        if (!rs.next()) {
-                            Optional<Object> empty = Optional.empty();
-                            return Optional.empty();
-                        }
-                        rs.last();
-                        return Optional.ofNullable(new Customer.Builder()
-                                .setId(rs.getString(1))
-                                .setIdentification(rs.getString(2))
-                                .setName(rs.getString(3))
-                                .setLastName(rs.getString(4))
-                                .setEmail(rs.getString(5))
-                                .setAddress(rs.getString(6))
-                                .setPhone(rs.getString(7))
-                                .setType(rs.getString(8))
-                                .setStatus(rs.getString(9))
-                                .setCreateDate(rs.getString(10))
-                                .setUpdateDate(rs.getString(11))
-                                .build());
-                    });
-            return customer;
+            return getSingleCustomer(run, query);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

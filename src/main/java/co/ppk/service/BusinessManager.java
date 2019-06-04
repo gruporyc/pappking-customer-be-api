@@ -7,6 +7,9 @@ import co.ppk.dto.FaceplateDto;
 import java.util.List;
 
 public interface BusinessManager {
+
+    CustomerDto getCustomer(String customerId);
+
     CustomerDto getCustomerByIdentification(String identification);
 
     List<Customer> getCustomers();

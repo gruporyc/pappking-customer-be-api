@@ -89,7 +89,7 @@ public class ProxyEndpointController extends BaseRestController {
 
 	@RequestMapping(value = "/customer/{customer_id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Object> getCustomer(@PathVariable("customer_id") String customerId) {
-		Customer customer = businessManager.getCustomer(customerId);
+		CustomerDto customer = businessManager.getCustomer(customerId);
 
 		if(Objects.isNull(customer)) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
