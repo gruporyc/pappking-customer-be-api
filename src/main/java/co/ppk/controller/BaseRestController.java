@@ -7,7 +7,7 @@
  *
  *
  ******************************************************************/
-package co.ppk.web.controller;
+package co.ppk.controller;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -26,14 +26,6 @@ import co.ppk.enums.ResponseKeyName;
  *
  */
 public abstract class BaseRestController {
-
-	  /**
-	   * The error properties.
-	   */
-	  @Autowired
-	  @Qualifier("errorProperties")
-	  protected Properties errorProperties;
-
 	  /**
 	   * Creates the success response using the key as provided payloadName and value as the provided object
 	   *

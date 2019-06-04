@@ -1,13 +1,19 @@
+/******************************************************************
+ *
+ * This code is for the Pappking service project.
+ *
+ *
+ * © 2018, Pappking Management All rights reserved.
+ *
+ *
+ ******************************************************************/
+
 package co.ppk.config.security;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -19,7 +25,7 @@ import org.springframework.security.web.authentication.HttpStatusEntryPoint;
  * Main security configuration files where resides the authorization rules and
  * general configuration features
  * 
- * @author Blanclabs
+ * @author jmunoz
  *
  */
 @EnableWebSecurity
@@ -37,8 +43,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 		http.headers().defaultsDisabled().cacheControl().and().httpStrictTransportSecurity().and().contentTypeOptions()
 				.and().xssProtection().and().frameOptions();
+
+        http.csrf().disable();
 		
-		http.authorizeRequests().mvcMatchers("/v1/message").permitAll().and().csrf().disable();
+		http.authorizeRequests().mvcMatchers("/v1").permitAll().and().csrf().disable();
 		http.exceptionHandling().authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)).and().sessionManagement();
 		
 		// http.authorizeRequests().mvcMatchers("/v1/login").anonymous().and().authorizeRequests()
@@ -62,8 +70,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	/**
 	 * method used to activate debug security trace based on logger level
 	 * 
-	 * @param web
-	 * @throws Exception
+	 * @param web WebSecurity context
+	 * @throws Exception general exception
 	 */
 	@Override
 	public void configure(WebSecurity web) throws Exception {

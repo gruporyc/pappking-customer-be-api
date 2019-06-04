@@ -8,7 +8,7 @@
  *
  ******************************************************************/
 
-package co.ppk.web.controller;
+package co.ppk.controller;
 
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

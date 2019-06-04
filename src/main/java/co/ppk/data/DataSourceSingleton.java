@@ -1,4 +1,4 @@
-package co.ppk.data;
+package co.ppk.utilities;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
@@ -18,15 +18,13 @@ public class DataSourceSingleton {
     public static synchronized DataSource getInstance() {
         if (instance == null) {
             HikariConfig config = new HikariConfig();
-            config.setDriverClassName("com.mysql.cj.jdbc.Driver");
+
             config.setJdbcUrl(Optional.ofNullable(System.getenv("CUSTOMER_DB_URL"))
-                    .orElse("jdbc:mysql://104.197.233.102:3306/ppk_customers"));
-                    //.orElse("jdbc:mysql://localhost:3306/ppk_customers"));
+                    .orElse("jdbc:mysql://127.0.0.1:3306/ppk_customers"));
             config.setUsername(Optional.ofNullable(System.getenv("CUSTOMER_JDBC_USERNAME"))
                     .orElse("root"));
             config.setPassword(Optional.ofNullable(System.getenv("CUSTOMER_JDBC_PASSWORD"))
-                    .orElse("pericos2"));
-                    //.orElse(""));
+                    .orElse("123456"));
             config.addDataSourceProperty("cachePrepStmts", "true");
             config.addDataSourceProperty("prepStmtCacheSize", "250");
             config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");

@@ -7,33 +7,27 @@
  *
  *
  ******************************************************************/
-package co.ppk.web.controller;
+package co.ppk;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Import;
-
-import co.ppk.config.ApplicationConfig;
 
 /***
  * Configuration class for Spring IOC
- * 
- * @Descripcion
+ *
  * @author jmunoz
  * 
  * @version 1.0
  */
 
 @SpringBootApplication
-@Import({ApplicationConfig.class})
-public class SpringBootController  {
+public class CustomerAPIApplication {
 
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args) throws Exception {
-		System.setProperty("PPK_HOME", "/ppk");
-		SpringApplication.run(SpringBootController.class, args);
+	public static void main(String[] args) {
+		SpringApplication.run(CustomerAPIApplication.class, args);
 	}
 
 }

@@ -33,11 +33,6 @@ public class ExceptionControllerAdvice {
   /** The log variable */
   private final Logger log = LoggerFactory.getLogger(ExceptionControllerAdvice.class);
 
-  /** The error properties. */
-  @Autowired
-  @Qualifier("errorProperties")
-  private Properties errorProperties;
-
   @ExceptionHandler(PpkFieldValidationException.class)
   public ResponseEntity<Object> handleDppmFieldValidationException(PpkFieldValidationException ex) {
     return processBindingError(ex.getBindingResult());
